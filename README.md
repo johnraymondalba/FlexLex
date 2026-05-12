@@ -18,7 +18,6 @@
 10. [How It Works](#how-it-works)
 11. [Extending the Lexer](#extending-the-lexer)
 12. [Troubleshooting](#troubleshooting)
-13. [License](#license)
 
 ---
 
@@ -316,9 +315,3 @@ The server auto-rebuilds on restart (`npm start`).
 | `Lexer build failed` | Check `lexer/lexer.l` for syntax errors; run `make -C lexer` manually |
 | Tokens missing for a pattern | Check rule order in `lexer.l`; longer/specific rules should precede general ones |
 | Port conflict | Change `PORT` in `backend/server.js` and `API` in `frontend/index.html` |
-
----
-
-## License
-
-MIT © 2024. See [LICENSE](LICENSE) for details.
