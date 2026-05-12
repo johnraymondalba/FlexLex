@@ -1,0 +1,20 @@
+# Build artifacts
+lexer/lex.yy.c
+lexer/lexer
+
+# Node.js
+node_modules/
+backend/node_modules/
+
+# Temp files
+*.tmp
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

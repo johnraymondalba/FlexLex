@@ -1,0 +1,15 @@
+{
+  "name": "flexlex-lexical-analyzer",
+  "version": "1.0.0",
+  "description": "A web-based lexical analyzer powered by GNU Flex",
+  "scripts": {
+    "install:backend": "cd backend && npm install",
+    "build:lexer": "make -C lexer",
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "setup": "npm run install:backend && npm run build:lexer"
+  },
+  "keywords": ["flex", "lexer", "lexical-analyzer", "compiler", "tokenizer"],
+  "author": "",
+  "license": "MIT"
+}
