@@ -1,23 +1,6 @@
 # FlexLex — Web-Based Lexical Analyzer
 
-> A lexical analyzer (tokenizer) built with **GNU Flex**, exposed through a **Node.js/Express** API and a polished **browser-based UI**.
-
----
-
-## Table of Contents
-
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Project Structure](#project-structure)
-4. [Token Types](#token-types)
-5. [Prerequisites](#prerequisites)
-6. [Installation & Setup](#installation--setup)
-7. [Running the Application](#running-the-application)
-8. [Using the UI](#using-the-ui)
-9. [API Reference](#api-reference)
-10. [How It Works](#how-it-works)
-11. [Extending the Lexer](#extending-the-lexer)
-12. [Troubleshooting](#troubleshooting)
+A lexical analyzer (tokenizer) built with **GNU Flex**, exposed through a **Node.js/Express** API and a polished **browser-based UI**.
 
 ---
 
@@ -186,6 +169,27 @@ Open `frontend/index.html` directly in your browser — **no build step required
 ### Summary Statistics
 
 After analysis, a stats bar appears above the token stream showing per-category counts.
+
+---
+## Sample Walktrough
+
+### Here is the application demo:
+
+#### Loading Sample Codes
+
+![Application Demo](sampleassets/sample.gif)
+
+#### Typing Code Snippets to Analyze
+
+![Application Demo](sampleassets/type.gif)
+
+#### Analyzing Invalid Tokens
+
+![Application Demo](sampleassets/unknown.gif)
+
+#### Clear Button
+
+![Application Demo](sampleassets/clear.gif)
 
 ---
 
