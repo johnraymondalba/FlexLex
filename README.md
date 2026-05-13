@@ -2,6 +2,7 @@
 
 A lexical analyzer (tokenizer) built with **GNU Flex**, exposed through a **Node.js/Express** API and a polished **browser-based UI**.
 
+![Application Demo](sampleassets/intro.gif)
 ---
 
 ## Overview
