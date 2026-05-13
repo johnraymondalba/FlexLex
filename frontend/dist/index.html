@@ -12,26 +12,26 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #1a1a1a;
-      --surface:   #2d2d2d;
-      --surface2:  #3a3a3a;
-      --border:    #4a4a4a;
-      --accent:    #4a9eff;
-      --accent2:   #357abd;
+      --bg:        #0b0d12;
+      --surface:   #121620;
+      --surface2:  #1a2030;
+      --border:    #252e42;
+      --accent:    #00e5a0;
+      --accent2:   #0099ff;
       --accent3:   #ff6b6b;
-      --text:      #e0e0e0;
-      --muted:     #888888;
-      --radius:    6px;
+      --text:      #e8ecf4;
+      --muted:     #6b7a99;
+      --radius:    10px;
 
       /* Token colours */
-      --c-keyword:    #4a9eff;
-      --c-identifier: #50fa7b;
+      --c-keyword:    #ff79c6;
+      --c-identifier: #8be9fd;
       --c-integer:    #ffb86c;
       --c-float:      #f1fa8c;
       --c-string:     #50fa7b;
       --c-operator:   #ff5555;
       --c-delimiter:  #bd93f9;
-      --c-comment:    #6b7a99;
+      --c-comment:    #6272a4;
       --c-unknown:    #ff6b6b;
     }
 
@@ -45,13 +45,19 @@
 
     /* ── Noise texture overlay ─── */
     body::before {
-      display: none;
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999; opacity: .5;
     }
 
     /* ── Glow blobs ─── */
     .blob {
-      display: none;
+      position: fixed; border-radius: 50%;
+      filter: blur(120px); pointer-events: none; z-index: 0; opacity: .18;
     }
+    .blob-1 { width: 600px; height: 600px; background: var(--accent2); top: -200px; left: -200px; }
+    .blob-2 { width: 500px; height: 500px; background: var(--accent);  bottom: -150px; right: -150px; }
 
     /* ── Layout ─── */
     .wrapper {
@@ -73,10 +79,11 @@
     }
     .logo-icon {
       width: 42px; height: 42px;
-      background: var(--accent);
-      border-radius: 6px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 20px; font-weight: 800; color: #1a1a1a;
+      font-size: 20px; font-weight: 800; color: #000;
+      box-shadow: 0 0 20px rgba(0,229,160,.3);
     }
     .logo-text { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
     .logo-text span { color: var(--accent); }
@@ -120,6 +127,7 @@
     .panel-title .dot {
       width: 7px; height: 7px; border-radius: 50%;
       background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
     }
 
     /* ── Code editor ─── */
@@ -128,21 +136,26 @@
       width: 100%; min-height: 340px;
       background: transparent;
       border: none; outline: none; resize: none;
-      padding: 18px 20px 18px 56px;
+      padding: 18px 20px 18px 70px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 13.5px; line-height: 1.7;
       color: var(--text);
       caret-color: var(--accent);
       tab-size: 2;
+      box-sizing: border-box;
     }
     .line-numbers {
       position: absolute; left: 0; top: 0;
-      width: 42px; padding: 18px 0;
-      text-align: right; padding-right: 10px;
+      width: 60px; padding: 18px 8px 18px 8px;
+      text-align: right;
       font-family: 'JetBrains Mono', monospace;
       font-size: 13.5px; line-height: 1.7;
       color: var(--border); user-select: none;
       pointer-events: none;
+      white-space: pre;
+      overflow: hidden;
+      height: 100%;
+      box-sizing: border-box;
     }
 
     /* ── Toolbar ─── */
@@ -161,13 +174,15 @@
       transition: all .15s ease;
     }
     .btn-primary {
-      background: var(--accent);
-      color: #1a1a1a;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #000;
+      box-shadow: 0 4px 20px rgba(0,153,255,.25);
     }
     .btn-primary:hover {
-      background: var(--accent2);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(0,153,255,.4);
     }
-    .btn-primary:active { opacity: 0.9; }
+    .btn-primary:active { transform: translateY(0); }
     .btn-secondary {
       background: var(--surface); color: var(--muted);
       border: 1px solid var(--border);
@@ -316,7 +331,11 @@
 
   <div class="wrapper">
     <header>
-      <span class="badge" style="margin: 0;">LEXICAL ANALYZER: Programming Languages Final Project</span>
+      <div class="logo">
+        <div class="logo-icon">FL</div>
+        <div class="logo-text">Flex<span>Lex</span></div>
+      </div>
+      <span class="badge">LEXICAL ANALYZER for C/C++</span>
     </header>
 
     <div class="main-grid">
