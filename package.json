@@ -4,7 +4,7 @@
   "description": "A web-based lexical analyzer powered by GNU Flex",
   "scripts": {
     "install:backend": "cd ./backend && npm install",
-    "build": "npm run install:backend && mkdir -p frontend/dist && cp frontend/index.html frontend/dist/index.html",
+    "build": "mkdir -p frontend/dist && cp frontend/index.html frontend/dist/index.html",
     "start": "cd ./backend && npm start",
     "dev": "cd ./backend && npm run dev"
   },
