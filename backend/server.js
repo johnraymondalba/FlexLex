@@ -101,5 +101,5 @@ if (!fs.existsSync(LEXER_BIN)) {
   console.warn("WARNING: Lexer binary not found at " + LEXER_BIN + ". /api/analyze may not work.");
 }
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:3001`);
 });
