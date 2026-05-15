@@ -1,6 +1,6 @@
 # Build artifacts
 lexer/lex.yy.c
-lexer/lexer
+# Note: lexer/lexer binary is committed for Vercel deployment
 
 # Node.js
 node_modules/
