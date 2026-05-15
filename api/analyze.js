@@ -1,10 +1,39 @@
-const { execFile } = require('child_process');
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-// Path to the lexer binary (in the root lexer directory)
-const LEXER_BIN = path.join(__dirname, '../lexer/lexer');
+/**
+ * Find the lexer binary in multiple possible locations
+ */
+function getLexerBinary() {
+  // Try multiple paths
+  const possiblePaths = [
+    path.join(__dirname, '../lexer/lexer'),
+    path.join(process.cwd(), 'lexer/lexer'),
+    '/var/task/lexer/lexer',
+    path.resolve(__dirname, '../lexer/lexer'),
+  ];
+
+  for (const binPath of possiblePaths) {
+    if (fs.existsSync(binPath)) {
+      try {
+        fs.accessSync(binPath, fs.constants.X_OK);
+        return binPath;
+      } catch (e) {
+        // Try to make it executable if it exists
+        try {
+          fs.chmodSync(binPath, 0o755);
+          return binPath;
+        } catch (chmodErr) {
+          continue;
+        }
+      }
+    }
+  }
+
+  return null;
+}
 
 /**
  * Parse lexer output into tokens and summary
@@ -61,32 +90,36 @@ module.exports = (req, res) => {
     return res.status(400).json({ error: 'Input too large (max 100 KB).' });
   }
 
-  // Write code to a temp file
-  const tmpFile = path.join(os.tmpdir(), `lex_input_${Date.now()}.txt`);
-  
-  fs.writeFile(tmpFile, code, (writeErr) => {
-    if (writeErr) {
-      return res.status(500).json({ error: 'Failed to write temp file.' });
-    }
-
-    // Execute lexer with the temp file as input
-    execFile(LEXER_BIN, [], { 
-      timeout: 10_000,
-      input: code // pipe code directly to stdin
-    }, (err, stdout, stderr) => {
-      // Clean up temp file
-      fs.unlink(tmpFile, () => {});
-
-      if (err && !stdout) {
-        return res.status(500).json({ error: 'Lexer error: ' + stderr });
-      }
-
-      try {
-        const result = parseLexerOutput(stdout);
-        return res.json(result);
-      } catch (parseErr) {
-        return res.status(500).json({ error: 'Failed to parse lexer output.' });
-      }
+  // Find lexer binary
+  const LEXER_BIN = getLexerBinary();
+  if (!LEXER_BIN) {
+    return res.status(500).json({ 
+      error: 'Lexer binary not found. Please ensure lexer/lexer is committed to the repository.' 
     });
-  });
+  }
+
+  try {
+    // Use execSync with stdin for better compatibility with Vercel
+    const stdout = execSync(LEXER_BIN, {
+      input: code,
+      timeout: 10_000,
+      maxBuffer: 10 * 1024 * 1024, // 10MB buffer
+      encoding: 'utf8'
+    });
+
+    try {
+      const result = parseLexerOutput(stdout);
+      return res.json(result);
+    } catch (parseErr) {
+      return res.status(500).json({ error: 'Failed to parse lexer output: ' + parseErr.message });
+    }
+  } catch (err) {
+    const stderr = err.stderr ? err.stderr.toString() : '';
+    const stdout = err.stdout ? err.stdout.toString() : '';
+    
+    return res.status(500).json({ 
+      error: 'Lexer execution failed',
+      details: stderr || stdout || err.message
+    });
+  }
 };

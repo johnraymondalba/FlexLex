@@ -1,0 +1,14 @@
+# Binary files
+lexer/lexer binary
+*.o binary
+*.a binary
+
+# Text files
+*.js text
+*.json text
+*.html text
+*.md text
+*.l text
+*.c text
+Makefile text
+.gitignore text

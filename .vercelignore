@@ -1,8 +1,4 @@
-# Ignore backend server (using serverless functions instead)
-backend/server.js
-backend/node_modules/
-
-# Don't ignore the lexer binary - it's needed for the API
+# Ensure lexer binary IS deployed
 !lexer/lexer
 
 # Ignore source files that don't affect deployment
@@ -10,9 +6,14 @@ lexer/Makefile
 lexer/lex.yy.c
 lexer/lexer.l
 
+# Ignore backend (using serverless functions instead)
+backend/server.js
+backend/node_modules/
+
 # Development files
 *.log
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+
