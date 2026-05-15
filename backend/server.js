@@ -15,19 +15,6 @@ app.use(express.static(path.join(__dirname, "../frontend/dist")));
 const LEXER_DIR = path.join(__dirname, "../lexer");
 const LEXER_BIN = path.join(LEXER_DIR, "lexer");
 
-/* ── Build lexer binary on startup ─────────────────────────────────────── */
-function buildLexer(callback) {
-  exec("make -C " + LEXER_DIR, (err, stdout, stderr) => {
-    if (err) {
-      console.error("Build failed:", stderr);
-      callback(err);
-    } else {
-      console.log("Lexer built successfully.");
-      callback(null);
-    }
-  });
-}
-
 /* ── Parse lexer output ─────────────────────────────────────────────────── */
 function parseLexerOutput(raw) {
   const lines = raw.trim().split("\n");
@@ -110,11 +97,9 @@ app.get("*", (_req, res) => {
 });
 
 /* ── Start ─────────────────────────────────────────────────────────────── */
-buildLexer((buildErr) => {
-  if (buildErr) {
-    console.warn("WARNING: Lexer build failed. /api/analyze may not work.");
-  }
-  app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-  });
+if (!fs.existsSync(LEXER_BIN)) {
+  console.warn("WARNING: Lexer binary not found at " + LEXER_BIN + ". /api/analyze may not work.");
+}
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });

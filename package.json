@@ -4,11 +4,9 @@
   "description": "A web-based lexical analyzer powered by GNU Flex",
   "scripts": {
     "install:backend": "cd ./backend && npm install",
-    "build:lexer": "make -C ./lexer",
-    "build": "mkdir -p frontend/dist && cp frontend/index.html frontend/dist/index.html && echo 'Frontend built successfully!'",
+    "build": "npm run install:backend && mkdir -p frontend/dist && cp frontend/index.html frontend/dist/index.html",
     "start": "cd ./backend && npm start",
-    "dev": "cd ./backend && npm run dev",
-    "setup": "npm run install:backend && npm run build:lexer"
+    "dev": "cd ./backend && npm run dev"
   },
   "keywords": ["flex", "lexer", "lexical-analyzer", "compiler", "tokenizer"],
   "author": "",
